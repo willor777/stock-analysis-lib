@@ -1,4 +1,4 @@
-package charts_and_indicators
+package com.willor.stock_analysis_lib.charts
 
 import com.tictactec.ta.lib.Core
 

@@ -1,6 +1,6 @@
-package charts_and_indicators.ta_indicators
+package com.willor.stock_analysis_lib.charts.ta_indicators
 
-import charts_and_indicators.StockChart
+import com.willor.stock_analysis_lib.charts.StockChart
 import com.tictactec.ta.lib.MInteger
 
 class AverageTrueRange(

@@ -1,5 +1,6 @@
-package charts_and_indicators
+package com.willor.stock_analysis_lib.charts
 
+import com.willor.stock_analysis_lib.common.CandleInterval
 import java.util.*
 import kotlin.math.abs
 
@@ -10,7 +11,7 @@ import kotlin.math.abs
 @Suppress("unused")
 class StockChart(
     val ticker: String,
-    val interval: String,
+    val interval: CandleInterval,
     val periodRange: String,
     val prepost: Boolean,
     val datetime: List<Date>,
@@ -19,7 +20,7 @@ class StockChart(
     val high: List<Double>,
     val low: List<Double>,
     val close: List<Double>,
-    val volume: List<Int>
+    val volume: List<Int>,
 ){
     val lastIndex = open.lastIndex
 
@@ -443,4 +444,34 @@ class StockChart(
         val close: Double,
         val volume: Int
     )
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
