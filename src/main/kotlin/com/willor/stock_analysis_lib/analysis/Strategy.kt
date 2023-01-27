@@ -6,6 +6,10 @@ interface Strategy {
     val strategyName: StrategyName
     val displayName: String
     val description: String
+    val requiredPeriodRange: String
+    val requiredCandleInterval: String
+    val requiredPrepost: Boolean
+
 
     fun analyzeChart(chart: StockChart): AnalysisResults
 
