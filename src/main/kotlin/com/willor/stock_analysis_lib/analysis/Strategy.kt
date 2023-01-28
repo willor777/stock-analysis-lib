@@ -4,8 +4,8 @@ import com.willor.stock_analysis_lib.charts.StockChart
 
 interface Strategy {
     val strategyName: StrategyName
-    val displayName: String
-    val description: String
+    val strategyDisplayName: String
+    val strategyDescription: String
     val requiredPeriodRange: String
     val requiredCandleInterval: String
     val requiredPrepost: Boolean
