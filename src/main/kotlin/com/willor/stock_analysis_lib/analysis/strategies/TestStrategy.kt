@@ -1,8 +1,11 @@
-package com.willor.stock_analysis_lib.analysis
+package com.willor.stock_analysis_lib.analysis.strategies
 
+import com.willor.stock_analysis_lib.analysis.AnalysisResults
+import com.willor.stock_analysis_lib.analysis.Strategy
+import com.willor.stock_analysis_lib.analysis.StrategyName
 import com.willor.stock_analysis_lib.charts.StockChart
 
-class TestStrategy: Strategy {
+class TestStrategy: Strategy() {
     override val strategyName: StrategyName = StrategyName.TEST_STRATEGY
     override val strategyDisplayName: String = "Test Strategy"
     override val strategyDescription: String = "Strategy That throws either a Long or Short trigger every time. Intended for " +
@@ -14,16 +17,16 @@ class TestStrategy: Strategy {
     override fun analyzeChart(chart: StockChart): AnalysisResults {
         return AnalysisResults(
             chart.ticker,
-            (-1..1).random(),
             strategyName,
             strategyDisplayName,
             strategyDescription,
+            (-1..1).random(),
+            .99,
             chart.getCloseAtIndex(-1),
-            (0..100).random().toDouble() / 100.0,
-            suggestedStop = chart.getCloseAtIndex(-1) - (chart.getCloseAtIndex(-1) * .005),
-            suggestedTakeProfit = chart.getCloseAtIndex(-1) + (chart.getCloseAtIndex(-1) * .01),
-            shouldCloseLongPositions = false,
-            shouldCloseShortPositions = false,
+            0.0,
+            0.0,
+            false,
+            false
         )
     }
 }

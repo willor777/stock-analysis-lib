@@ -70,7 +70,7 @@ class StockChart(
         return datetime[findTrueIndex(i)]
     }
 
-    fun getSublistOfDatetime(startIndex: Int, endIndex: Int): List<Date> {
+    fun getSublistOfDate(startIndex: Int, endIndex: Int): List<Date> {
         return datetime.subList(findTrueIndex(startIndex), findTrueIndex(endIndex) + 1)
     }
 
@@ -114,6 +114,29 @@ class StockChart(
         }
 
         return candles
+    }
+
+    fun getSublistOfCandlesByDatetime(start: Date, end: Date): List<Candle> {
+
+        val targetData = mutableListOf<Candle>()
+
+        // Get list of all candles
+        val allCandles = getSublistOfCandles(0, -1)
+
+        // Check date of each candle, add to dataset if in range.
+        for (c in allCandles) {
+
+            // Break loop if endpoint has been reached
+            if (c.datetime.after(end)){
+                break
+            }
+            else if (c.datetime.after(start)){
+                targetData.add(c)
+            }
+
+        }
+
+        return targetData
     }
 
     /**
