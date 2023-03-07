@@ -1,32 +1,33 @@
 package com.willor.stock_analysis_lib.analysis.strategies
 
 import com.willor.stock_analysis_lib.analysis.AnalysisResults
-import com.willor.stock_analysis_lib.analysis.Strategy
-import com.willor.stock_analysis_lib.analysis.StrategyName
+import com.willor.stock_analysis_lib.analysis.Strategies
+import com.willor.stock_analysis_lib.analysis.StrategyBase
+import com.willor.stock_analysis_lib.analysis.StrategyReqData
 import com.willor.stock_analysis_lib.charts.StockChart
 import java.util.*
 import kotlin.math.abs
 
-class PremarketRangeBreak : Strategy() {
+class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqData>() {
 
-    override val strategyName: StrategyName
-        get() = TODO("Not yet implemented")
+    override val strategyName: Strategies
+        get() = Strategies.PREMARKET_RANGE_BREAK
     override val strategyDisplayName: String
-        get() = TODO("Not yet implemented")
+        get() = Strategies.PREMARKET_RANGE_BREAK.displayName
     override val strategyDescription: String
         get() = TODO("Not yet implemented")
     override val requiredPeriodRange: String
-        get() = TODO("Not yet implemented")
+        get() = "2d"
     override val requiredCandleInterval: String
-        get() = TODO("Not yet implemented")
+        get() = "NONE"
     override val requiredPrepost: Boolean
-        get() = TODO("Not yet implemented")
+        get() = true
 
 
     private val outlierPercentage = 0.03
     private val bufferPercentage = 0.005           // 0.5%
 
-    override fun analyzeChart(chart: StockChart): AnalysisResults {
+    override fun analyze(data: StrategyReqData.PreMarketRangeBreakReqData): List<AnalysisResults> {
 
         /* Steps...
 
@@ -38,50 +39,72 @@ class PremarketRangeBreak : Strategy() {
             - Makes sure it DID NOT Break on third candle
          */
 
-        val hl = determineHighLowOfRange(chart) ?: return buildNeutralAnalysisResults(chart)
+        val results = mutableListOf<AnalysisResults>()
 
-        val high = hl.first + (hl.first * bufferPercentage)
-        val low = hl.second - (hl.second * bufferPercentage)
+        for (chart in data.charts){
 
-        val t1 = chart.getCloseAtIndex(-2)
-        val t2 = chart.getCloseAtIndex(-3)
+            // Find high and low of range
+            val hl = determineHighLowOfRange(chart)
+            if (hl == null){
+                results.add(buildNeutralAnalysisResults(chart))
+                continue
+            }
 
-        // Bullish
-        if (t1 > high && t2 < high) {
-            return AnalysisResults(
-                chart.ticker,
-                strategyName,
-                strategyDisplayName,
-                strategyDescription,
-                1,
-                .99,
-                chart.getCloseAtIndex(-1),
-                0.0,
-                0.0,
-                false,
-                false,
-            )
+            val high = hl.first + (hl.first * bufferPercentage)
+            val low = hl.second - (hl.second * bufferPercentage)
+
+            val trailOneHigh = chart.getHighAtIndex(-2)
+            val trailTwoHigh = chart.getHighAtIndex(-3)
+
+            val trailOneLow = chart.getLowAtIndex(-2)
+            val trailTwoLow = chart.getLowAtIndex(-3)
+
+
+            // Bullish
+            if (trailOneHigh > high && trailTwoHigh < high) {
+                 val res = AnalysisResults(
+                    chart.ticker,
+                    strategyName,
+                    strategyDisplayName,
+                    strategyDescription,
+                    1,
+                    .99,
+                    chart.getCloseAtIndex(-1),
+                    0.0,
+                    0.0,
+                    false,
+                    false,
+                )
+
+                results.add(res)
+            }
+
+            // Bearish
+            else if (trailOneLow < low && trailTwoLow > low) {
+                val res = AnalysisResults(
+                    chart.ticker,
+                    strategyName,
+                    strategyDisplayName,
+                    strategyDescription,
+                    -1,
+                    .99,
+                    chart.getCloseAtIndex(-1),
+                    0.0,
+                    0.0,
+                    false,
+                    false,
+                )
+
+                results.add(res)
+            }
+
+            // Neutral
+            else {
+                results.add(buildNeutralAnalysisResults(chart))
+            }
         }
 
-        // Bearish
-        else if (t1 < low && t2 > low) {
-            return AnalysisResults(
-                chart.ticker,
-                strategyName,
-                strategyDisplayName,
-                strategyDescription,
-                -1,
-                .99,
-                chart.getCloseAtIndex(-1),
-                0.0,
-                0.0,
-                false,
-                false,
-            )
-        }
-
-        // No Trigger
-        return buildNeutralAnalysisResults(chart)
+        return results.toList()
     }
 
 

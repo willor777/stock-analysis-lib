@@ -1,12 +1,11 @@
 package com.willor.stock_analysis_lib.analysis.strategies
 
 import com.willor.stock_analysis_lib.analysis.AnalysisResults
-import com.willor.stock_analysis_lib.analysis.Strategy
-import com.willor.stock_analysis_lib.analysis.StrategyName
+import com.willor.stock_analysis_lib.analysis.Strategies
 import com.willor.stock_analysis_lib.charts.StockChart
 
 class TestStrategy: Strategy() {
-    override val strategyName: StrategyName = StrategyName.TEST_STRATEGY
+    override val strategyName: Strategies = Strategies.TEST_STRATEGY
     override val strategyDisplayName: String = "Test Strategy"
     override val strategyDescription: String = "Strategy That throws either a Long or Short trigger every time. Intended for " +
             "Testing purposes only"
