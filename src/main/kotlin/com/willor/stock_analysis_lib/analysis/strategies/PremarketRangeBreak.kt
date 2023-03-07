@@ -10,16 +10,12 @@ import kotlin.math.abs
 
 class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqData>() {
 
-    override val strategyName: Strategies
+    override val strategyInfo: Strategies
         get() = Strategies.PREMARKET_RANGE_BREAK
-    override val strategyDisplayName: String
-        get() = Strategies.PREMARKET_RANGE_BREAK.displayName
-    override val strategyDescription: String
-        get() = TODO("Not yet implemented")
     override val requiredPeriodRange: String
         get() = "2d"
-    override val requiredCandleInterval: String
-        get() = "NONE"
+    override val requiredCandleInterval: String?
+        get() = null
     override val requiredPrepost: Boolean
         get() = true
 
@@ -64,9 +60,9 @@ class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqD
             if (trailOneHigh > high && trailTwoHigh < high) {
                  val res = AnalysisResults(
                     chart.ticker,
-                    strategyName,
-                    strategyDisplayName,
-                    strategyDescription,
+                    strategyInfo,
+                     strategyInfo.displayName,
+                     strategyInfo.description,
                     1,
                     .99,
                     chart.getCloseAtIndex(-1),
@@ -83,9 +79,9 @@ class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqD
             else if (trailOneLow < low && trailTwoLow > low) {
                 val res = AnalysisResults(
                     chart.ticker,
-                    strategyName,
-                    strategyDisplayName,
-                    strategyDescription,
+                    strategyInfo,
+                    strategyInfo.displayName,
+                    strategyInfo.description,
                     -1,
                     .99,
                     chart.getCloseAtIndex(-1),

@@ -8,11 +8,7 @@ import com.willor.stock_analysis_lib.charts.StockChart
 
 class RSRWBasic: StrategyBase<StrategyReqData.RSRWBasicReqData>() {
 
-    override val strategyName: Strategies
-        get() = TODO("Not yet implemented")
-    override val strategyDisplayName: String
-        get() = TODO("Not yet implemented")
-    override val strategyDescription: String
+    override val strategyInfo: Strategies
         get() = TODO("Not yet implemented")
     override val requiredPeriodRange: String
         get() = TODO("Not yet implemented")
