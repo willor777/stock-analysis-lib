@@ -1,35 +1,42 @@
-package com.willor.stock_analysis_lib.charts.ta_indicators
+package com.github.willor777.stock_analysis_lib.charts.ta_indicators
 
 import com.tictactec.ta.lib.MInteger
 
-class RSI(
+class WMA(
     val inputData: List<Double>,
-    val window: Int = 14
+    val window: Int
 ) : IndicatorBase() {
 
-    val size = inputData.size
     val lastIndex = inputData.lastIndex
+    val size = inputData.size
+
     val values: List<Double>
 
     init {
 
-        // RSI requires 1 more value than the window, so window + 1 in size calculation
-        val size = calculateOutputArraySize(inputData.size, window + 1)
-        val outArr = DoubleArray(size)
+        val outSize = calculateOutputArraySize(inputData.size, window)
+        val outArr = DoubleArray(outSize)
 
-        // startI, endI, input, window, _, _, output
-        talib.rsi(
+        // start, end, input, window, _, _, output
+        talib.wma(
             0,
-            inputData.lastIndex,
+            lastIndex,
             inputData.toDoubleArray(),
             window,
             MInteger(), MInteger(),
             outArr
         )
 
-        values = fillMissingValues(outArr, inputData)
+        this.values = fillMissingValues(outArr, inputData)
+
+        println(values)
+
+
+        println(values.size)
+        println(inputData.size)
 
     }
+
 
     fun getValueAtIndex(i: Int): Double {
         return values[findTrueIndex(i, values.lastIndex)]
@@ -42,4 +49,5 @@ class RSI(
             findTrueIndex(endIndex, values.lastIndex) + 1
         )
     }
+
 }

@@ -1,42 +1,32 @@
-package com.willor.stock_analysis_lib.charts.ta_indicators
+package com.github.willor777.stock_analysis_lib.charts.ta_indicators
 
 import com.tictactec.ta.lib.MInteger
 
-class WMA(
+class EMA(
     val inputData: List<Double>,
     val window: Int
 ) : IndicatorBase() {
 
+    val values: List<Double>
     val lastIndex = inputData.lastIndex
     val size = inputData.size
 
-    val values: List<Double>
-
     init {
+        val size = calculateOutputArraySize(inputData.size, window)
 
-        val outSize = calculateOutputArraySize(inputData.size, window)
-        val outArr = DoubleArray(outSize)
+        val outArr = DoubleArray(size)
 
-        // start, end, input, window, _, _, output
-        talib.wma(
-            0,
-            lastIndex,
+        talib.ema(
+            0, inputData.lastIndex,
             inputData.toDoubleArray(),
             window,
-            MInteger(), MInteger(),
+            MInteger(),
+            MInteger(),
             outArr
         )
 
-        this.values = fillMissingValues(outArr, inputData)
-
-        println(values)
-
-
-        println(values.size)
-        println(inputData.size)
-
+        values = fillMissingValues(outArr, inputData)
     }
-
 
     fun getValueAtIndex(i: Int): Double {
         return values[findTrueIndex(i, values.lastIndex)]
@@ -49,5 +39,4 @@ class WMA(
             findTrueIndex(endIndex, values.lastIndex) + 1
         )
     }
-
 }

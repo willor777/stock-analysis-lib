@@ -1,4 +1,4 @@
-package com.willor.stock_analysis_lib.common
+package com.github.willor777.stock_analysis_lib.common
 
 enum class CandleInterval(
     val timeOfFirstCandle: String,

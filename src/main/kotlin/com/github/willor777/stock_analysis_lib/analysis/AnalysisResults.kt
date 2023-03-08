@@ -1,8 +1,8 @@
-package com.willor.stock_analysis_lib.analysis
+package com.github.willor777.stock_analysis_lib.analysis
 
 data class AnalysisResults(
     val ticker: String,
-    val strategyName: Strategies,
+    val strategyName: com.github.willor777.stock_analysis_lib.analysis.Strategies,
     val strategyDisplayName: String,
     val strategyDescription: String,
     val triggerValue: Int,

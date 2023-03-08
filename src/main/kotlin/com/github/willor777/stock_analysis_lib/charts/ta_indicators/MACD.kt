@@ -1,4 +1,4 @@
-package com.willor.stock_analysis_lib.charts.ta_indicators
+package com.github.willor777.stock_analysis_lib.charts.ta_indicators
 
 import com.tictactec.ta.lib.MInteger
 

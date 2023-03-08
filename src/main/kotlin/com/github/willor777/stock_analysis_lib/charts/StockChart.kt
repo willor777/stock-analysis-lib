@@ -1,4 +1,4 @@
-package com.willor.stock_analysis_lib.charts
+package com.github.willor777.stock_analysis_lib.charts
 
 import com.willor.stock_analysis_lib.common.CandleInterval
 import java.util.*

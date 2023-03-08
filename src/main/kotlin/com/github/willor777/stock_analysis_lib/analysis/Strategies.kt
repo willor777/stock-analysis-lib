@@ -1,4 +1,4 @@
-package com.willor.stock_analysis_lib.analysis
+package com.github.willor777.stock_analysis_lib.analysis
 
 enum class Strategies(val displayName: String, val description: String) {
     TEST_STRATEGY(

@@ -28,8 +28,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId 'com.github.willor777'
-            artifactId 'stock-analysis-lib'
-            version '1.0.7-alpha'
+            artifactId 'stock_analysis_lib'
+            version '1.0.9-alpha'
             from components.java
         }
     }

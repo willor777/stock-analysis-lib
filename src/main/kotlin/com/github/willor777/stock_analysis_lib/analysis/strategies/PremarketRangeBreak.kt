@@ -1,17 +1,17 @@
-package com.willor.stock_analysis_lib.analysis.strategies
+package com.github.willor777.stock_analysis_lib.analysis.strategies
 
-import com.willor.stock_analysis_lib.analysis.AnalysisResults
-import com.willor.stock_analysis_lib.analysis.Strategies
-import com.willor.stock_analysis_lib.analysis.StrategyBase
-import com.willor.stock_analysis_lib.analysis.StrategyReqData
+import com.github.willor777.stock_analysis_lib.analysis.AnalysisResults
+import com.github.willor777.stock_analysis_lib.analysis.Strategies
+import com.github.willor777.stock_analysis_lib.analysis.StrategyBase
+import com.github.willor777.stock_analysis_lib.analysis.StrategyReqData
 import com.willor.stock_analysis_lib.charts.StockChart
 import java.util.*
 import kotlin.math.abs
 
-class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqData>() {
+class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.StrategyBase<com.github.willor777.stock_analysis_lib.analysis.StrategyReqData.PreMarketRangeBreakReqData>() {
 
-    override val strategyInfo: Strategies
-        get() = Strategies.PREMARKET_RANGE_BREAK
+    override val strategyInfo: com.github.willor777.stock_analysis_lib.analysis.Strategies
+        get() = com.github.willor777.stock_analysis_lib.analysis.Strategies.PREMARKET_RANGE_BREAK
     override val requiredPeriodRange: String
         get() = "2d"
     override val requiredCandleInterval: String?
@@ -23,7 +23,7 @@ class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqD
     private val outlierPercentage = 0.03
     private val bufferPercentage = 0.005           // 0.5%
 
-    override fun analyze(data: StrategyReqData.PreMarketRangeBreakReqData): List<AnalysisResults> {
+    override fun analyze(data: com.github.willor777.stock_analysis_lib.analysis.StrategyReqData.PreMarketRangeBreakReqData): List<com.github.willor777.stock_analysis_lib.analysis.AnalysisResults> {
 
         /* Steps...
 
@@ -35,7 +35,7 @@ class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqD
             - Makes sure it DID NOT Break on third candle
          */
 
-        val results = mutableListOf<AnalysisResults>()
+        val results = mutableListOf<com.github.willor777.stock_analysis_lib.analysis.AnalysisResults>()
 
         for (chart in data.charts){
 
@@ -58,26 +58,26 @@ class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqD
 
             // Bullish
             if (trailOneHigh > high && trailTwoHigh < high) {
-                 val res = AnalysisResults(
-                    chart.ticker,
-                    strategyInfo,
+                 val res = com.github.willor777.stock_analysis_lib.analysis.AnalysisResults(
+                     chart.ticker,
+                     strategyInfo,
                      strategyInfo.displayName,
                      strategyInfo.description,
-                    1,
-                    .99,
-                    chart.getCloseAtIndex(-1),
-                    0.0,
-                    0.0,
-                    false,
-                    false,
-                )
+                     1,
+                     .99,
+                     chart.getCloseAtIndex(-1),
+                     0.0,
+                     0.0,
+                     false,
+                     false,
+                 )
 
                 results.add(res)
             }
 
             // Bearish
             else if (trailOneLow < low && trailTwoLow > low) {
-                val res = AnalysisResults(
+                val res = com.github.willor777.stock_analysis_lib.analysis.AnalysisResults(
                     chart.ticker,
                     strategyInfo,
                     strategyInfo.displayName,
