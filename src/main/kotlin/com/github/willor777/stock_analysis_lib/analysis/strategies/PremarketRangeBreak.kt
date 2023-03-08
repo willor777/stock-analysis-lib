@@ -4,14 +4,14 @@ import com.github.willor777.stock_analysis_lib.analysis.AnalysisResults
 import com.github.willor777.stock_analysis_lib.analysis.Strategies
 import com.github.willor777.stock_analysis_lib.analysis.StrategyBase
 import com.github.willor777.stock_analysis_lib.analysis.StrategyReqData
-import com.willor.stock_analysis_lib.charts.StockChart
+import com.github.willor777.stock_analysis_lib.charts.StockChart
 import java.util.*
 import kotlin.math.abs
 
-class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.StrategyBase<com.github.willor777.stock_analysis_lib.analysis.StrategyReqData.PreMarketRangeBreakReqData>() {
+class PremarketRangeBreak : StrategyBase<StrategyReqData.PreMarketRangeBreakReqData>() {
 
-    override val strategyInfo: com.github.willor777.stock_analysis_lib.analysis.Strategies
-        get() = com.github.willor777.stock_analysis_lib.analysis.Strategies.PREMARKET_RANGE_BREAK
+    override val strategyInfo: Strategies
+        get() = Strategies.PREMARKET_RANGE_BREAK
     override val requiredPeriodRange: String
         get() = "2d"
     override val requiredCandleInterval: String?
@@ -23,7 +23,7 @@ class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.Str
     private val outlierPercentage = 0.03
     private val bufferPercentage = 0.005           // 0.5%
 
-    override fun analyze(data: com.github.willor777.stock_analysis_lib.analysis.StrategyReqData.PreMarketRangeBreakReqData): List<com.github.willor777.stock_analysis_lib.analysis.AnalysisResults> {
+    override fun analyze(data:StrategyReqData.PreMarketRangeBreakReqData): List<AnalysisResults> {
 
         /* Steps...
 
@@ -35,7 +35,7 @@ class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.Str
             - Makes sure it DID NOT Break on third candle
          */
 
-        val results = mutableListOf<com.github.willor777.stock_analysis_lib.analysis.AnalysisResults>()
+        val results = mutableListOf<AnalysisResults>()
 
         for (chart in data.charts){
 
@@ -58,7 +58,7 @@ class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.Str
 
             // Bullish
             if (trailOneHigh > high && trailTwoHigh < high) {
-                 val res = com.github.willor777.stock_analysis_lib.analysis.AnalysisResults(
+                 val res = AnalysisResults(
                      chart.ticker,
                      strategyInfo,
                      strategyInfo.displayName,
@@ -77,7 +77,7 @@ class PremarketRangeBreak : com.github.willor777.stock_analysis_lib.analysis.Str
 
             // Bearish
             else if (trailOneLow < low && trailTwoLow > low) {
-                val res = com.github.willor777.stock_analysis_lib.analysis.AnalysisResults(
+                val res = AnalysisResults(
                     chart.ticker,
                     strategyInfo,
                     strategyInfo.displayName,

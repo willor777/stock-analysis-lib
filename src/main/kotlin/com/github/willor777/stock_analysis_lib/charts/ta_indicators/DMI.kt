@@ -1,7 +1,7 @@
 package com.github.willor777.stock_analysis_lib.charts.ta_indicators
 
+import com.github.willor777.stock_analysis_lib.charts.StockChart
 import com.tictactec.ta.lib.MInteger
-import com.willor.stock_analysis_lib.charts.StockChart
 
 class DMI(
     val inputData: List<StockChart.Candle>,

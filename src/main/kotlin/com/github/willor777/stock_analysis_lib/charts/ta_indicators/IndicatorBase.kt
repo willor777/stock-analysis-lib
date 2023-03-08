@@ -1,6 +1,7 @@
 package com.github.willor777.stock_analysis_lib.charts.ta_indicators
 
-import com.willor.stock_analysis_lib.charts.TaLibCore
+import com.github.willor777.stock_analysis_lib.charts.TaLibCore
+
 
 /**
  * All sublist methods return startIndex up to and including endIndex
