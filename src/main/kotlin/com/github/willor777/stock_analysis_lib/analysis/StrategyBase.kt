@@ -12,6 +12,9 @@ abstract class StrategyBase<T: StrategyReqData> {
 
     abstract fun analyze(data: T): List<AnalysisResults>
 
+    /**
+     * Builds analysis results to be returned if no trigger was found. Does not include suggested stop/takeProft
+     */
     internal fun buildNeutralAnalysisResults(chart: StockChart): AnalysisResults {
         return AnalysisResults(
             chart.ticker, strategyInfo, strategyInfo.displayName, strategyInfo.description, 0, 0.0,
