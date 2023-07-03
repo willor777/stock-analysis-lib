@@ -60,8 +60,7 @@ object MarketTimeUtil {
     }
 
 
-
-    fun determineNextCandleTime(hour: Int, minute: Int, candleInterval: CandleInterval): Pair<Int, Int> {
+    private fun determineNextCandleTime(hour: Int, minute: Int, candleInterval: CandleInterval): Pair<Int, Int> {
 
 
         val timeInInterval = candleInterval.minutesInInterval
@@ -78,9 +77,6 @@ object MarketTimeUtil {
         }
         return Pair(hour, nextMinuteInInterval)
     }
-
-
-
 
 
     private fun getFirstCandleOfNextBusinessDay(
@@ -102,7 +98,7 @@ object MarketTimeUtil {
         return newCal.timeInMillis
     }
 
-    fun isBusinessDay(ts: Long): Boolean {
+    private fun isBusinessDay(ts: Long): Boolean {
 
         val cal = Calendar.getInstance().apply {
             timeInMillis = ts
@@ -146,6 +142,4 @@ object MarketTimeUtil {
 
 
 fun main() {
-    val test = MarketTimeUtil.determineNextCandleTime(14, 48, CandleInterval.M15)
-    println(test)
 }
